@@ -39,8 +39,7 @@ ws.on("message", async function incoming(data) {
         d.guild_id === "938836025659232327" &&
         (d.channel_id === "940359293302108211" ||
           d.channel_id === "1062253413854871573" ||
-          d.channel_id === "1072410249451020319" ||
-          d.channel_id === "940488967927787530")
+          d.channel_id === "1072410249451020319")
       ) {
         console.log(`MESSAGE_CREATE`, JSON.stringify(d));
         await axios.post("https://www.bluetags.app/api/admin/create-rawData", {
