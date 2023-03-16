@@ -33,34 +33,17 @@ ws.on("message", async function incoming(data) {
       interval = heartbeat(heartbeat_interval);
       break;
   }
-  switch (t) {
-    case "MESSAGE_CREATE":
-      if (
-        d.guild_id === "938836025659232327" &&
-        (d.channel_id === "940359293302108211" ||
-          d.channel_id === "1062253413854871573" ||
-          d.channel_id === "1072410249451020319")
-      ) {
-        console.log(`MESSAGE_CREATE`, JSON.stringify(d));
-        await axios.post("https://www.bluetags.app/api/admin/create-rawData", {
-          data: JSON.stringify(d),
-        });
-      }
-
-      break;
-    case "MESSAGE_UPDATE":
-      if (
-        d.guild_id === "938836025659232327" &&
-        (d.channel_id === "940359293302108211" ||
-          d.channel_id === "1062253413854871573" ||
-          d.channel_id === "1072410249451020319")
-      ) {
-        console.log(`MESSAGE_UPDATE`, JSON.stringify(d));
-        await axios.post("https://www.bluetags.app/api/admin/create-rawData", {
-          data: JSON.stringify(d),
-        });
-      }
-      break;
+  if (
+    d.guild_id === "938836025659232327" &&
+    (d.channel_id === "940359293302108211" ||
+      d.channel_id === "1062253413854871573" ||
+      d.channel_id === "1072410249451020319")
+  ) {
+    console.log(t);
+    console.log(`MESSAGE_CREATE`, JSON.stringify(d));
+    await axios.post("https://www.bluetags.app/api/admin/create-rawData", {
+      data: JSON.stringify(d),
+    });
   }
 });
 
