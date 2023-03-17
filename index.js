@@ -6,7 +6,7 @@ const ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
 let interval = 0;
 
 let token =
-  "Mzg5NjU1MDAxOTgwNDY5MjQ5.GF6UGX.h9cDQRCxEftNY8nxk8PWeUMHBhO8tmYP58xsUs";
+  "Mzg5NjU1MDAxOTgwNDY5MjQ5.GXUZl_.2mERAwlRb9bAJUiDY3M6dCn4YUmxt0qEJXJ50Y";
 let payload = {
   op: 2,
   d: {
@@ -22,7 +22,6 @@ let payload = {
 
 ws.on("open", function open() {
   ws.send(JSON.stringify(payload));
-  console.log("start");
 });
 
 ws.on("message", async function incoming(data) {
@@ -40,8 +39,7 @@ ws.on("message", async function incoming(data) {
       d.channel_id === "1062253413854871573" ||
       d.channel_id === "1072410249451020319")
   ) {
-    console.log(t);
-    console.log(`MESSAGE_CREATE`, JSON.stringify(d));
+    console.log(t, JSON.stringify(d));
     await axios.post("https://www.bluetags.app/api/admin/create-rawData", {
       data: JSON.stringify(d),
     });
