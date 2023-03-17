@@ -22,6 +22,7 @@ let payload = {
 
 ws.on("open", function open() {
   ws.send(JSON.stringify(payload));
+  console.log("start");
 });
 
 ws.on("message", async function incoming(data) {
