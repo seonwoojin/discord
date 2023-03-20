@@ -33,6 +33,7 @@ ws.on("message", async function incoming(data) {
       interval = heartbeat(heartbeat_interval);
       break;
   }
+  console.log(t);
   if (d) {
     if (d?.guild_id && d?.channel_id) {
       console.log(d?.guild_id);
