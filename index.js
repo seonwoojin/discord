@@ -1,5 +1,6 @@
 const WebSocket = require("ws");
 const os = require("os");
+const io = require("socket.io-client");
 const { default: axios } = require("axios");
 require("dotenv").config();
 
@@ -18,6 +19,10 @@ const messageType = [
   "THREAD_DELETE",
 ];
 const ws = new WebSocket("wss://gateway.discord.gg/?v=10&encoding=json");
+const bluetagsWs = io(process.env.GATEWAY, {
+  withCredentials: true,
+});
+
 let interval = 0;
 
 let token = process.env.API;
@@ -34,6 +39,8 @@ let payload = {
   },
 };
 
+bluetagsWs.on("connect", () => {});
+
 ws.on("open", function open() {
   ws.send(JSON.stringify(payload));
 });
@@ -47,15 +54,8 @@ ws.on("message", async function incoming(data) {
       interval = heartbeat(heartbeat_interval);
       break;
   }
-  if (
-    guildId.includes(d?.guild_id) &&
-    messageType.includes(t) &&
-    channelId.includes(d?.channel_id)
-  ) {
-    console.log(t, JSON.stringify(d));
-    await axios.post("https://www.bluetags.app/api/admin/create-rawData", {
-      data: JSON.stringify(d),
-    });
+  if (guildId.includes(d?.guild_id)) {
+    bluetagsWs.emit("create discord post", d);
   }
 });
 
